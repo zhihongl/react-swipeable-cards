@@ -33,7 +33,9 @@ export default class Card extends Component {
 				var newClass = this.state.classList.filter(s => s !== 'moving');
 				this.setState({classList: newClass});
 				var moveOutWidth = document.body.clientWidth;
-				var keep = Math.abs(event.deltaX) < 300;
+				var triggerSwipeDistance = undefined !== this.props.triggerSwipeDistance ? +this.props.triggerSwipeDistance : 300;
+				console.warn('this.props.triggerSwipeDistance', triggerSwipeDistance);
+				var keep = Math.abs(event.deltaX) < triggerSwipeDistance;
 				event.target.classList.toggle('removed', !keep);
 				if (keep) {
 					event.target.style.transform = '';

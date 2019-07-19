@@ -66,9 +66,10 @@ class Demo extends Component {
 		};
 		return data.map((d) => {
 			return(
-				<Card 
+				<Card
 					key={d.id}
 					data={d}
+					triggerSwipeDistance={100}
 					onSwipeLeft={this.onSwipeLeft.bind(this)}
 					onSwipeRight={this.onSwipeRight.bind(this)}
 					onDoubleTap={this.onDoubleTap.bind(this)}
