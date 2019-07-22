@@ -1,4 +1,4 @@
-# React-Swipeable-Cards-Upgraded
+# React-Swipeable-Cards
 
 ![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)
 

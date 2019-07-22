@@ -34,7 +34,33 @@ export default class Card extends Component {
 				this.setState({classList: newClass});
 				var moveOutWidth = document.body.clientWidth;
 				var triggerSwipeDistance = undefined !== this.props.triggerSwipeDistance ? +this.props.triggerSwipeDistance : 300;
-				console.warn('this.props.triggerSwipeDistance', triggerSwipeDistance);
+
+
+				// var keepY = Math.abs(event.deltaY) < triggerSwipeDistance;
+				// event.target.classList.toggle('removed', !keepY);
+				// if (keepY) {
+				// 	event.target.style.transform = '';
+				// } else {
+				// 	var endX = Math.max(Math.abs(event.velocityX) * moveOutWidth, moveOutWidth);
+				// 	var toX = event.deltaX > 0 ? endX : -endX;
+				// 	var endY = Math.abs(event.velocityY) * moveOutWidth;
+				// 	var toY = event.deltaY > 0 ? endY : -endY;
+				// 	var xMulti = event.deltaX * 0.03;
+				// 	var yMulti = event.deltaY / 80;
+				// 	var rotate = xMulti * yMulti;
+				// 	event.target.style.transform = 'translate(' + toX + 'px, ' + (toY + event.deltaY) + 'px) rotate(' + rotate + 'deg)';
+				// 	// DO SWIPE ACTIONS
+				// 	this.props.superOnSwipe();
+				// 	if(this.props.onSwipe) this.props.onSwipe(this.props.data);
+				// 	if(toY < 0 && this.props.onSwipeUp) {
+				// 		this.props.onSwipeUp(this.props.data);
+				// 	} else if(this.props.onSwipeDown) {
+				// 		this.props.onSwipeDown(this.props.data);
+				// 	}
+				// }
+
+
+
 				var keep = Math.abs(event.deltaX) < triggerSwipeDistance;
 				event.target.classList.toggle('removed', !keep);
 				if (keep) {
@@ -61,8 +87,11 @@ export default class Card extends Component {
 		}
 	}
 
-	onDoubleTap() {
+	onDoubleTap(event) {
+		// console.warn('event.target.classList', event)
+		event.target.classList.toggle('removed', true);
 		if(this.props.onDoubleTap) this.props.onDoubleTap(this.props.data);
+
 	}
 
 	render() {

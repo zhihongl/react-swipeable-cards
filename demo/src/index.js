@@ -30,6 +30,10 @@ class Demo extends Component {
 		});
 	}
 
+    onSwipeUp(data) {
+	    console.warn('onSwipeUp');
+    }
+
 	addEndCard() {
 		let titleStyle = {
 			textAlign: "center",
@@ -70,6 +74,7 @@ class Demo extends Component {
 					key={d.id}
 					data={d}
 					triggerSwipeDistance={100}
+                    onSwipeUp={this.onSwipeUp.bind(this)}
 					onSwipeLeft={this.onSwipeLeft.bind(this)}
 					onSwipeRight={this.onSwipeRight.bind(this)}
 					onDoubleTap={this.onDoubleTap.bind(this)}
