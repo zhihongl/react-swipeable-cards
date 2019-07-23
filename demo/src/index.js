@@ -8,7 +8,9 @@ class Demo extends Component {
 		this.state = {
 			message: "React-Swipe-Card",
 			messageButton: "Add End Card",
-			showEndCard: false
+			showEndCard: false,
+			showLeftSection: false,
+			showRightSection: false,
 		}
 	}
 
@@ -30,9 +32,31 @@ class Demo extends Component {
 		});
 	}
 
-    onSwipeUp(data) {
-	    console.warn('onSwipeUp');
-    }
+	onDraggingLeft(data) {
+	    // console.warn('onDraggingLeft', data);
+		// this.state.showLeftSection = true;
+		this.setState({
+			showLeftSection: true,
+			showRightSection: false,
+		});
+	}
+
+	onDraggingRight(data) {
+		this.setState({
+			showLeftSection: false,
+			showRightSection: true,
+		});
+	}
+
+	onDraggingEnd(data) {
+		// console.warn('onDraggingEnd', data);
+		// this.state.showLeftSection = false;
+		// this.state.showRightSection = false;
+		this.setState({
+			showLeftSection: false,
+			showRightSection: false,
+		});
+	}
 
 	addEndCard() {
 		let titleStyle = {
@@ -74,7 +98,11 @@ class Demo extends Component {
 					key={d.id}
 					data={d}
 					triggerSwipeDistance={100}
-                    onSwipeUp={this.onSwipeUp.bind(this)}
+					leftSection={<h1 style={{'background': 'red'}}>LEFT</h1>}
+					rightSection={<h1 style={{'background':'red'}}>RIGHT</h1>}
+					onDraggingLeft={this.onDraggingLeft.bind(this)}
+					onDraggingEnd={this.onDraggingEnd.bind(this)}
+					onDraggingRight={this.onDraggingRight.bind(this)}
 					onSwipeLeft={this.onSwipeLeft.bind(this)}
 					onSwipeRight={this.onSwipeRight.bind(this)}
 					onDoubleTap={this.onDoubleTap.bind(this)}
@@ -87,7 +115,10 @@ class Demo extends Component {
 		});
 	}
 
+
+
 	render() {
+		console.warn('steate', this.state);
 		let wrapperStyle = {
 			backgroundColor: "#024773",
 			height: "80vh"
@@ -112,6 +143,11 @@ class Demo extends Component {
 				<CardWrapper style={wrapperStyle} addEndCard={this.state.showEndCard ? this.addEndCard.bind(this) : null}>
 					{this.renderCards()}
 				</CardWrapper>
+
+				<h1>Testing</h1>
+				{this.state.showLeftSection && 'showLeftSection'}
+				{this.state.showRightSection && 'showRightSection'}
+
 				<div style={messageStyle}>{this.state.message}</div>
 				<div style={{textAlign: "center"}}><button style={buttonStyle} onClick={this.changeEndCardState.bind(this)}>{this.state.messageButton}</button></div>
 			</div>
