@@ -16,7 +16,9 @@ var Card = function (_Component) {
 		var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
 		_this.state = {
-			classList: ["card_container"]
+			classList: ["card_container"],
+			showLeftSection: false,
+			showRightSection: false
 		};
 		return _this;
 	}
@@ -33,11 +35,36 @@ var Card = function (_Component) {
 				var yMulti = event.deltaY / 80;
 				var rotate = xMulti * yMulti;
 				event.target.style.transform = 'translate(' + event.deltaX + 'px, ' + event.deltaY + 'px) rotate(' + rotate + 'deg)';
+
+				if (event.deltaX < 0) {
+					this.setState({
+						showLeftSection: true,
+						showRightSection: false
+					});
+					if (this.props.onDraggingLeft) {
+						this.props.onDraggingLeft(this.props.data);
+					}
+				} else {
+					this.setState({
+						showLeftSection: false,
+						showRightSection: true
+					});
+
+					if (this.props.onDraggingRight) {
+						this.props.onDraggingRight(this.props.data);
+					}
+				}
 			}
 		}
 	};
 
 	Card.prototype.onPanEnd = function onPanEnd(event) {
+
+		this.setState({
+			showLeftSection: false,
+			showRightSection: false
+		});
+
 		if (this.props.isSwipeEnabled !== false) {
 			if (this.props.isLeftSwipeEnabled !== false && event.deltaX <= 0 || this.props.isRightSwipeEnabled !== false && event.deltaX >= 0) {
 				var newClass = this.state.classList.filter(function (s) {
@@ -46,7 +73,7 @@ var Card = function (_Component) {
 				this.setState({ classList: newClass });
 				var moveOutWidth = document.body.clientWidth;
 				var triggerSwipeDistance = undefined !== this.props.triggerSwipeDistance ? +this.props.triggerSwipeDistance : 300;
-				console.warn('this.props.triggerSwipeDistance', triggerSwipeDistance);
+
 				var keep = Math.abs(event.deltaX) < triggerSwipeDistance;
 				event.target.classList.toggle('removed', !keep);
 				if (keep) {
@@ -71,9 +98,14 @@ var Card = function (_Component) {
 				}
 			}
 		}
+
+		if (this.props.onDraggingEnd) {
+			this.props.onDraggingEnd(this.props.data);
+		}
 	};
 
-	Card.prototype.onDoubleTap = function onDoubleTap() {
+	Card.prototype.onDoubleTap = function onDoubleTap(event) {
+		event.target.classList.toggle('removed', true);
 		if (this.props.onDoubleTap) this.props.onDoubleTap(this.props.data);
 	};
 
@@ -84,7 +116,17 @@ var Card = function (_Component) {
 			React.createElement(
 				"div",
 				{ className: this.state.classList.join(" "), style: this.props.style },
-				this.props.children
+				this.props.children,
+				this.state.showLeftSection && React.createElement(
+					"div",
+					{ className: "left-section" },
+					this.props.leftSection
+				),
+				this.state.showRightSection && React.createElement(
+					"div",
+					{ className: "right-section" },
+					this.props.rightSection
+				)
 			)
 		);
 	};
