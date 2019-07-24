@@ -12,50 +12,33 @@ class Demo extends Component {
 			showLeftSection: false,
 			showRightSection: false,
 		}
+		this.Like = 'http://tinder-moustache.s3-website-ap-southeast-2.amazonaws.com/32a65604ffb8cb6d97f7cff01261085c.svg';
+		this.Dislike = 'http://tinder-moustache.s3-website-ap-southeast-2.amazonaws.com/0c1e5999d92367d14f27de4ac9c84411.svg';
+
 	}
 
+
 	onSwipeLeft(data) {
-		this.setState({
-			message: "You Swiped Left " + data.title
-		});
 	}
 
 	onSwipeRight(data) {
-		this.setState({
-			message: "You Swiped Right " + data.title
-		});
 	}
 
 	onDoubleTap(data) {
-		this.setState({
-			message: "You Double Tapped " + data.title
-		});
 	}
 
 	onDraggingLeft(data) {
 	    // console.warn('onDraggingLeft', data);
 		// this.state.showLeftSection = true;
-		this.setState({
-			showLeftSection: true,
-			showRightSection: false,
-		});
 	}
 
 	onDraggingRight(data) {
-		this.setState({
-			showLeftSection: false,
-			showRightSection: true,
-		});
 	}
 
 	onDraggingEnd(data) {
 		// console.warn('onDraggingEnd', data);
 		// this.state.showLeftSection = false;
 		// this.state.showRightSection = false;
-		this.setState({
-			showLeftSection: false,
-			showRightSection: false,
-		});
 	}
 
 	addEndCard() {
@@ -73,6 +56,21 @@ class Demo extends Component {
 		);
 	}
 
+	leftSection = () => {
+		// return React.default.createElement(
+		// 	'div',
+		// 	{ className: 'card_container end_card' },
+		// 	<div><h1>LEFT Section</h1><img src={this.Like} alt=""/></div>
+		// );
+	}
+
+	rightSection = () => {
+		return(
+			<div><h1>LEFT Section</h1></div>
+		);
+	}
+
+
 	changeEndCardState(e) {
 		e.preventDefault();
 		let showingEndCard = this.state.showEndCard;
@@ -85,21 +83,28 @@ class Demo extends Component {
 
 	renderCards() {
 		let data = [{id: 1, title: "First"},{id: 2, title: "Second"},{id: 3, title: "Third"}];
+		// data = [{id: 1, title: "First"}];
 		let titleStyle = {
 			textAlign: "center",
 			fontWeight: "bold",
 			fontSize: "50px",
 			fontFamily: "Sans-Serif",
-			marginTop: "10px"
+			pointerEvent: "none",
+			marginTop: "10px",
+			background: "grey",
+			height: '100%',
+			position: "relative",
+			width: "100%"
 		};
+		console.warn('data', data);
 		return data.map((d) => {
 			return(
 				<Card
 					key={d.id}
 					data={d}
 					triggerSwipeDistance={100}
-					leftSection={<h1 style={{'background': 'red'}}>LEFT</h1>}
-					rightSection={<h1 style={{'background':'red'}}>RIGHT</h1>}
+					leftSection={<div><h1>LEFT Section</h1><img src={this.Like} alt=""/></div>}
+					rightSection={<h1 style={{'background':'red'}}><img src={this.Dislike} alt=""/></h1>}
 					onDraggingLeft={this.onDraggingLeft.bind(this)}
 					onDraggingEnd={this.onDraggingEnd.bind(this)}
 					onDraggingRight={this.onDraggingRight.bind(this)}
@@ -118,10 +123,9 @@ class Demo extends Component {
 
 
 	render() {
-		console.warn('steate', this.state);
 		let wrapperStyle = {
 			backgroundColor: "#024773",
-			height: "80vh"
+			height: "80vh",
 		};
 		let containerStyle = {
 			backgroundColor: "#024773",

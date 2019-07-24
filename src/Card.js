@@ -112,14 +112,8 @@ export default class Card extends Component {
 			<Hammer onPan={this.onPan.bind(this)} onPanEnd={this.onPanEnd.bind(this)} onDoubleTap={this.onDoubleTap.bind(this)}>
 				<div className={this.state.classList.join(" ")} style={this.props.style}>
 					{this.props.children}
-					{
-						this.state.showLeftSection &&
-						<div className="left-section">{this.props.leftSection}</div>
-					}
-					{
-						this.state.showRightSection &&
-						<div className="right-section">{this.props.rightSection}</div>
-					}
+					<div className={"left-section card-text-section " + ( this.state.showLeftSection ? "show" : "hidden d-none")}>{this.props.leftSection}</div>
+					<div className={"right-section card-text-section " + ( this.state.showRightSection ? "show" : "hidden d-none")}>{this.props.rightSection}</div>
 				</div>
 			</Hammer>
 		);

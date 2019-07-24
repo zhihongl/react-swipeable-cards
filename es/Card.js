@@ -117,14 +117,14 @@ var Card = function (_Component) {
 				"div",
 				{ className: this.state.classList.join(" "), style: this.props.style },
 				this.props.children,
-				this.state.showLeftSection && React.createElement(
+				React.createElement(
 					"div",
-					{ className: "left-section" },
+					{ className: "left-section card-text-section " + (this.state.showLeftSection ? "show" : "hidden d-none") },
 					this.props.leftSection
 				),
-				this.state.showRightSection && React.createElement(
+				React.createElement(
 					"div",
-					{ className: "right-section" },
+					{ className: "right-section card-text-section " + (this.state.showRightSection ? "show" : "hidden d-none") },
 					this.props.rightSection
 				)
 			)
